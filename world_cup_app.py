@@ -6,7 +6,7 @@ import json
 
 def get_standings():
     res = requests.get("http://worldcup.sfg.io/teams/results")
-    sorted_res = sorted(res.json(), key=lambda x: (x['group_letter'], x['points'], x['goal_differential']), reverse=True)
+    sorted_res = sorted(res.json(), key=lambda x: (x['group_letter'], x['points'], x['goal_differential'], x['country']), reverse=True)
     stand_groups = groupby(sorted_res, key=lambda x: x['group_letter'])
     return {i: [next(g)['country'], next(g)['country']] for i, g in stand_groups}
 
