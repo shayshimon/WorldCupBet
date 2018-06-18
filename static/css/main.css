@@ -25,6 +25,7 @@
 body, html {
 	height: 100%;
 	font-family: sans-serif;
+	background-color: #d1d1d1;
 }
 
 /* ------------------------------------ */
@@ -102,10 +103,9 @@ iframe {
   background: #d1d1d1;
 
   display: -webkit-box;
-  display: -webkit-flex;
   display: -moz-box;
   display: -ms-flexbox;
-  display: flex;
+
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
