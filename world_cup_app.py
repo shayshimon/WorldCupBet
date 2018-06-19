@@ -32,7 +32,7 @@ def present_scores():
             elif item[house][0] == stand_dict[house][1]['country']:
                 house_rank += 2
 
-            if stand_dict[house][1] == item[house][1]:
+            if stand_dict[house][1]['country'] == item[house][1]:
                 house_rank += 3
             elif item[house][1] == stand_dict[house][0]['country']:
                 house_rank += 2
