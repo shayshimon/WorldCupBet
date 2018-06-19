@@ -104,3 +104,7 @@ venv.bak/
 .mypy_cache/
 .swp
 .DS_Store
+
+# data files
+world_cup_bet_poll.csv
+bet_poll.json
