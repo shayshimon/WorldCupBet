@@ -20,7 +20,7 @@ app = Flask(__name__)
 def present_scores():
     stand_dict = get_standings()
 
-    with open('./data/bet_poll.json', 'r') as infile:
+    with open('./data/nutrino_bet_poll.json', 'r') as infile:
         bet_dict = json.load(infile)
 
     for item in bet_dict:
