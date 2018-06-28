@@ -5,13 +5,10 @@ import json
 
 
 def get_standings():
-    res = requests.get("http://worldcup.sfg.io/teams/results")
-    sorted_res = sorted(res.json(), key=lambda x: (x['group_letter'], x['points'], x['goal_differential'], x['country']), reverse=True)
-    stand_groups = groupby(sorted_res, key=lambda x: x['group_letter'])
+    res = requests.get("https://worldcup.sfg.io/teams/group_results")
     house_dict = {}
-    for i, g in stand_groups:
-        house_dict[i] = sorted(list(g), key=lambda x: (x['points'], x['goal_differential'], x['country']), reverse=True)
-
+    for i in res.json():
+        house_dict[i['letter']] = i['ordered_teams']
     return house_dict
 
 app = Flask(__name__)
@@ -20,7 +17,7 @@ app = Flask(__name__)
 def present_scores():
     stand_dict = get_standings()
 
-    with open('./data/bet_poll.json', 'r') as infile:
+    with open('./data/nutrino_bet_poll.json', 'r') as infile:
         bet_dict = json.load(infile)
 
     for item in bet_dict:
