@@ -14,7 +14,7 @@ elasticsearch==5.5.0
 elasticsearch-dsl==5.4.0
 Flask==2.0.3
 flask-apispec==0.3.2
-Flask-Cors==3.0.3
+Flask-Cors==3.0.9
 Flask-Elasticsearch==0.2.5
 Flask-HTTPAuth==3.2.1
 Flask-Migrate==2.1.1
