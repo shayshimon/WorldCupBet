@@ -5,7 +5,7 @@ import json
 
 
 def get_standings():
-    res = requests.get("http://worldcup.sfg.io/teams/results")
+    res = requests.get("https://world-cup-json-2018.herokuapp.com/teams/results")
     sorted_res = sorted(res.json(), key=lambda x: (x['group_letter'], x['points'], x['goal_differential'], x['country']), reverse=True)
     stand_groups = groupby(sorted_res, key=lambda x: x['group_letter'])
     house_dict = {}
