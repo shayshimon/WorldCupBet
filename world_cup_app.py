@@ -4,13 +4,28 @@ import requests
 import json
 
 
+def api_login():
+    url = 'http://api.cup2022.ir/api/v1/user/login'
+    header = {'Content-Type': 'application/json'}
+    data = {
+        'email': 'makunochi+worldcup@gmail.com',
+        'password': 'Shanghai1234'
+    }
+    res = requests.post(url, data=json.dumps(data), headers=header)
+    return res.json()['data']['token']
+
 def get_standings():
-    res = requests.get("https://world-cup-json-2018.herokuapp.com/teams/results")
-    sorted_res = sorted(res.json(), key=lambda x: (x['group_letter'], x['points'], x['goal_differential'], x['country']), reverse=True)
-    stand_groups = groupby(sorted_res, key=lambda x: x['group_letter'])
+    url = 'http://api.cup2022.ir/api/v1/standings'
+    header = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {api_login()}'
+    }
+    res = requests.get(url, headers=header)
+    stand_groups = res.json()['data']
     house_dict = {}
-    for i, g in stand_groups:
-        house_dict[i] = sorted(list(g), key=lambda x: (x['points'], x['goal_differential'], x['country']), reverse=True)
+    for item in stand_groups:
+        house_key = item['group']
+        house_dict[house_key] = sorted(list(item['teams']), key=lambda x: (x['pts'], x['gd'], x['name_en']), reverse=True)
 
     return house_dict
 
@@ -20,21 +35,21 @@ app = Flask(__name__)
 def present_scores():
     stand_dict = get_standings()
 
-    with open('./data/bet_poll.json', 'r') as infile:
+    with open('./data/nutrino_bet_poll.json', 'r') as infile:
         bet_dict = json.load(infile)
 
     for item in bet_dict:
         item_rank = 0
         for house in stand_dict:
             house_rank = 0
-            if stand_dict[house][0]['country'] == item[house][0]:
+            if stand_dict[house][0]['name_en'] == item[house][0]:
                 house_rank += 3
-            elif item[house][0] == stand_dict[house][1]['country']:
+            elif item[house][0] == stand_dict[house][1]['name_en']:
                 house_rank += 2
 
-            if stand_dict[house][1]['country'] == item[house][1]:
+            if stand_dict[house][1]['name_en'] == item[house][1]:
                 house_rank += 3
-            elif item[house][1] == stand_dict[house][0]['country']:
+            elif item[house][1] == stand_dict[house][0]['name_en']:
                 house_rank += 2
 
             item_rank += house_rank
@@ -47,4 +62,4 @@ def present_scores():
 
 @app.route("/end_point")
 def endp():
-    return requests.get("http://worldcup.sfg.io/teams/results").text
+    return get_standings()
