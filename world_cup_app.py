@@ -58,7 +58,7 @@ def present_scores():
 
     sorted_bet_dict = sorted(bet_dict, key=lambda x: x['rank'], reverse=True)
     abc_list = [chr(i) for i in range(ord('A'), ord('I'))]
-    return render_template("wc_rank.html", result=sorted_bet_dict, abc_list=abc_list, stand_dict=stand_dict)
+    return render_template("wc_rank_new.html", result=sorted_bet_dict, abc_list=abc_list, stand_dict=stand_dict)
 
 @app.route("/end_point")
 def endp():
