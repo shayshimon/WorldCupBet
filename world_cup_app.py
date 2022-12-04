@@ -25,7 +25,7 @@ def get_standings():
     house_dict = {}
     for item in stand_groups:
         house_key = item['group']
-        house_dict[house_key] = sorted(list(item['teams']), key=lambda x: (x['pts'], x['gd'], x['name_en']), reverse=True)
+        house_dict[house_key] = sorted(list(item['teams']), key=lambda x: (x['pts'], x['gd'], x['gf'], x['name_en']), reverse=True)
 
     return house_dict
 
