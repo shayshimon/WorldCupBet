@@ -29,6 +29,18 @@ def get_standings():
 
     return house_dict
 
+
+def team_name_translator(name):
+    if name == 'United States':
+        return 'USA'
+    elif name == 'South Korea':
+        return 'Korea'
+    elif name == 'Morocco':
+        return 'Morroco'
+    else:
+        return name
+
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -42,14 +54,14 @@ def present_scores():
         item_rank = 0
         for house in stand_dict:
             house_rank = 0
-            if stand_dict[house][0]['name_en'] == item[house][0]:
+            if team_name_translator(stand_dict[house][0]['name_en']) == item[house][0]:
                 house_rank += 3
-            elif item[house][0] == stand_dict[house][1]['name_en']:
+            elif item[house][0] == team_name_translator(stand_dict[house][1]['name_en']):
                 house_rank += 2
 
-            if stand_dict[house][1]['name_en'] == item[house][1]:
+            if team_name_translator(stand_dict[house][1]['name_en']) == item[house][1]:
                 house_rank += 3
-            elif item[house][1] == stand_dict[house][0]['name_en']:
+            elif item[house][1] == team_name_translator(stand_dict[house][0]['name_en']):
                 house_rank += 2
 
             item_rank += house_rank
